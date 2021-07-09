@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/miaogaolin/oauth2"
+
 	"github.com/go-oauth2/oauth2/v4"
 	"github.com/go-oauth2/oauth2/v4/errors"
 )
@@ -327,7 +329,7 @@ func (s *Server) ValidationTokenRequest(r *http.Request) (oauth2.GrantType, *oau
 
 	gt := oauth2.GrantType(r.FormValue("grant_type"))
 	if gt.String() == "" {
-		return "", nil, errors.ErrUnsupportedGrantType
+		gt = oauth2.PasswordCredentials
 	}
 
 	clientID, clientSecret, err := s.ClientInfoHandler(r)
